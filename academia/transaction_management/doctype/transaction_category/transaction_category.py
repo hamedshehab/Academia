@@ -12,15 +12,17 @@ class TransactionCategory(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from academia.transaction_management.doctype.transaction_category__requirement.transaction_category__requirement import TransactionCategoryRequirement
-		from academia.transaction_management.doctype.transaction_recipients.transaction_recipients import TransactionRecipients
+		from academia.transaction_management.doctype.transaction_category__requirement.transaction_category__requirement import (
+			TransactionCategoryRequirement,
+		)
+		from academia.transaction_management.doctype.transaction_path.transaction_path import TransactionPath
 		from frappe.types import DF
 
 		category_name: DF.Data
 		company: DF.Link | None
 		is_group: DF.Check
 		parent_category: DF.Link | None
-		recipients: DF.Table[TransactionRecipients]
+		recipients: DF.Table[TransactionPath]
 		requirements: DF.Table[TransactionCategoryRequirement]
 		template: DF.Link | None
 	# end: auto-generated types
@@ -34,8 +36,3 @@ class TransactionCategory(Document):
 #                                    filters={"parent": transaction_category},
 #                                    fields=["name", "required"])
 #     return requirements
-
-
-    	
-        	
-            	

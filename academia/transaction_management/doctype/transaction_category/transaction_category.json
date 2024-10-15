@@ -89,7 +89,7 @@
    "fieldname": "recipients",
    "fieldtype": "Table",
    "label": "Recipients",
-   "options": "Transaction Recipients"
+   "options": "Transaction Path"
   },
   {
    "fieldname": "get_recipients",
@@ -104,7 +104,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-15 23:03:33.500908",
+ "modified": "2024-10-15 19:55:25.604564",
  "modified_by": "Administrator",
  "module": "Transaction Management",
  "name": "Transaction Category",
