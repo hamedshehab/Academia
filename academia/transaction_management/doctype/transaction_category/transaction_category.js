@@ -25,10 +25,10 @@ frappe.ui.form.on("Transaction Category", {
             </style>`).appendTo("head");
 
 		// Hide 'add row' button
-		frm.get_field("recipients").grid.cannot_add_rows = true;
+		frm.get_field("path").grid.cannot_add_rows = true;
 		// Stop 'add below' & 'add above' options
-		frm.get_field("recipients").grid.only_sortable();
-		frm.refresh_field("recipients");
+		frm.get_field("path").grid.only_sortable();
+		frm.refresh_field("path");
 	},
 
 	refresh: function (frm) {
@@ -97,13 +97,13 @@ frappe.ui.form.on("Transaction Category", {
 						var selectedEmployees = response.message;
 
 						selectedEmployees.forEach((designation) => {
-							frm.add_child("recipients", {
+							frm.add_child("path", {
 								recipient_designation: designation.designation_name,
 							});
 						});
 
 						this.dialog.hide();
-						frm.refresh_field("recipients");
+						frm.refresh_field("path");
 					},
 				});
 			},
@@ -111,7 +111,7 @@ frappe.ui.form.on("Transaction Category", {
 	},
 
 	clear_recipients: function (frm) {
-		frm.clear_table("recipients");
-		frm.refresh_field("recipients");
+		frm.clear_table("path");
+		frm.refresh_field("path");
 	},
 });

@@ -570,7 +570,7 @@ frappe.ui.form.on('Transaction', {
                 docstatus: ['!=', 2],
                 department: ['!=', null],
                 designation: ['!=', null],
-                user_id: ["in", mustInclude]
+                //user_id: ["in", mustInclude]
               };
     
           if (!all_companies) {
@@ -650,10 +650,14 @@ frappe.ui.form.on('Transaction', {
   sub_category: function(frm) {
 
     get_cateory_doctype(frm)
+    frpape.throw("You reached here")
 
     // Clear previously added recipient fields
     frm.clear_table("recipients");
     frm.refresh_fields("recipients");
+
+    frm.clear_table("path");
+    frm.refresh_fields("path");
 
     // Fetch Transaction Type Recipients based on the selected category
     if (frm.doc.sub_category) {
@@ -663,6 +667,22 @@ frappe.ui.form.on('Transaction', {
           transaction_category: frm.doc.sub_category
         },
         callback: function(response) {
+
+          // Add transaction path table fileds
+          const paths = response.message || [];
+
+          paths.foreach(function(path) {
+            frm.add_child("path", {
+              step: path.step,
+              recipient_designation: path.recipient_designation,
+              will_print_paper: path.will_print_paper,
+              has_sign: path.has_sign,
+              is_received: path.is_received,
+            });
+          });
+
+          // Refresh the form to display the newly added fields
+          frm.refresh_fields("path");
 
           // Add recipient image fields for each Transaction Type Requirement
           const recipients = response.message || [];

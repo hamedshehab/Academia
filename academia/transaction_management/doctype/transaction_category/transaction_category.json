@@ -14,7 +14,7 @@
   "column_break_nqbz",
   "parent_category",
   "section_break_oqso",
-  "recipients",
+  "path",
   "get_recipients",
   "clear_recipients",
   "requirements_tab",
@@ -86,12 +86,6 @@
    "label": "Transaction Path"
   },
   {
-   "fieldname": "recipients",
-   "fieldtype": "Table",
-   "label": "Recipients",
-   "options": "Transaction Path"
-  },
-  {
    "fieldname": "get_recipients",
    "fieldtype": "Button",
    "label": "Get Recipients"
@@ -100,11 +94,17 @@
    "fieldname": "clear_recipients",
    "fieldtype": "Button",
    "label": "Clear Recipients"
+  },
+  {
+   "fieldname": "path",
+   "fieldtype": "Table",
+   "label": "Path",
+   "options": "Transaction Path"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-15 19:55:25.604564",
+ "modified": "2024-10-18 21:46:24.744741",
  "modified_by": "Administrator",
  "module": "Transaction Management",
  "name": "Transaction Category",

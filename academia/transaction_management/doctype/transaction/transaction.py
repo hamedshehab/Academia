@@ -23,6 +23,7 @@ class Transaction(Document):
     if TYPE_CHECKING:
         from academia.transaction_management.doctype.transaction_applicant.transaction_applicant import TransactionApplicant
         from academia.transaction_management.doctype.transaction_attachments.transaction_attachments import TransactionAttachments
+        from academia.transaction_management.doctype.transaction_path.transaction_path import TransactionPath
         from academia.transaction_management.doctype.transaction_recipients.transaction_recipients import TransactionRecipients
         from academia.transaction_management.doctype.transaction_signatories.transaction_signatories import TransactionSignatories
         from frappe.types import DF
@@ -43,6 +44,7 @@ class Transaction(Document):
         hijri_date: DF.Data | None
         main_external_entity_from: DF.Link | None
         main_external_entity_to: DF.Link | None
+        path: DF.Table[TransactionPath]
         priority: DF.Literal["", "Low", "Medium", "High", "Urgent"]
         recipients: DF.Table[TransactionRecipients]
         reference_number: DF.Data | None
@@ -318,26 +320,42 @@ def get_transaction_category_requirement(transaction_category):
 @frappe.whitelist()
 def get_transaction_category_recipients(transaction_category):
     recipients = []
+    path = []
 
-    # Fetch recipients for the selected transaction category
-    transaction_category_recipients = frappe.get_all(
-        "Transaction Recipients",
+    # Fetch transaction path for selected transaction category
+    transaction_category_path = frappe.get_all(
+        "Transaction Path",
         filters={"parent": transaction_category},
         fields=[
             "step",
-            "recipient_name",
-            "recipient_company",
-            "recipient_department",
             "recipient_designation",
-            "recipient_email",
-            "print_paper",
-            "has_sign"
+            "will_print_paper",
+            "has_sign",
+            "is_received"
         ],
-        order_by="step ASC",
+        order_by="step ASC"
     )
-    recipients.extend(transaction_category_recipients)
+    path.extend(transaction_category_path)
 
-    return recipients
+    # # Fetch recipients for the selected transaction category
+    # transaction_category_recipients = frappe.get_all(
+    #     "Transaction Recipients",
+    #     filters={"parent": transaction_category},
+    #     fields=[
+    #         "step",
+    #         "recipient_name",
+    #         "recipient_company",
+    #         "recipient_department",
+    #         "recipient_designation",
+    #         "recipient_email",
+    #         "print_paper",
+    #         "has_sign"
+    #     ],
+    #     order_by="step ASC",
+    # )
+    # recipients.extend(transaction_category_recipients)
+
+    return path
 
 
 @frappe.whitelist()
